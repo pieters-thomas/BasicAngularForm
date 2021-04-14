@@ -1,0 +1,97 @@
+{{ friendModel | json }}
+
+<style>
+  * {
+    display: block;
+  }
+
+  form {
+    width: 350px;
+    margin: auto;
+  }
+
+  :host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 8px 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+</style>
+
+<form #formName="ngForm" method="post">
+
+  <div class="form-group">
+    <label for="add-firstName">First Name</label>
+    <input class="form-control" #firstName="ngModel" [(ngModel)]="friendModel.firstName" id="add-firstName"
+           name="add-firstName" type="text" pattern="[A-Z][a-z ]*" required>
+    <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger" >
+      A first name is required
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="add-lastName">Last Name</label>
+    <input class="form-control" #lastName="ngModel" [(ngModel)]="friendModel.lastName" id="add-lastName"
+           name="add-lastName" type="text" required pattern="[A-Z'][a-z 'A-Z]*">
+    <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+      A last name is required
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="add-phone">Phone</label>
+    <input class="form-control" #phone="ngModel" [(ngModel)]="friendModel.phone" type="tel" name="add-phone"
+           id="add-phone" required>
+    <div [hidden]="phone.valid || phone.pristine" class="alert alert-danger">
+      A phone number is required
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="add-email">Email</label>
+    <input class="form-control" #email="ngModel" [(ngModel)]="friendModel.email" type="email" name="add-email"
+           id="add-email" required>
+    <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+      An email is required
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="add-favLang">Favourite Language</label>
+    <select class="form-control" #favLang="ngModel" [(ngModel)]="friendModel.favLang" name="add-favLang"
+            id="add-favLang" required>
+      <option *ngFor="let language of languages" [value]=language>{{language}}</option>
+    </select>
+    <div [hidden]="favLang.valid || favLang.pristine" class="alert alert-danger">
+      A favourite coding language is required
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit!</button>
+</form>
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<router-outlet></router-outlet>
