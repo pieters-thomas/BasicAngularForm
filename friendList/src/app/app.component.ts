@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Friend } from './Friend';
+import {Component} from '@angular/core';
+import {Friend} from './Friend';
+import {AddFriendService} from './add-friend.service';
 
 
 @Component({
@@ -12,9 +13,15 @@ export class AppComponent {
   public languages = ['html', 'css', 'js', 'php', 'python'];
   friendModel = new Friend();
 
-  AddFriend(): void
-  {
-    this.friendModel.favLang = 'php';
+  constructor(private addFriendService: AddFriendService) {
   }
+
+  public logAFriend(): void {
+    console.log(this.friendModel);
+    const observable = this.addFriendService.addFriend(this.friendModel);
+    observable.subscribe(data => 'it worked', error => 'it didn\'t work');
+  }
+
+
 }
 

@@ -34,13 +34,13 @@
 
 </style>
 
-<form #formName="ngForm" method="post">
+<form #friendForm="ngForm" (ngSubmit)="logAFriend()" [noValidate] method="post">
 
   <div class="form-group">
     <label for="add-firstName">First Name</label>
     <input class="form-control" #firstName="ngModel" [(ngModel)]="friendModel.firstName" id="add-firstName"
            name="add-firstName" type="text" pattern="[A-Z][a-z ]*" required>
-    <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger" >
+    <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
       A first name is required
     </div>
   </div>
@@ -57,7 +57,7 @@
   <div class="form-group">
     <label for="add-phone">Phone</label>
     <input class="form-control" #phone="ngModel" [(ngModel)]="friendModel.phone" type="tel" name="add-phone"
-           id="add-phone" required>
+           id="add-phone" pattern="[0-9]{9,10}" required>
     <div [hidden]="phone.valid || phone.pristine" class="alert alert-danger">
       A phone number is required
     </div>
@@ -66,7 +66,7 @@
   <div class="form-group">
     <label for="add-email">Email</label>
     <input class="form-control" #email="ngModel" [(ngModel)]="friendModel.email" type="email" name="add-email"
-           id="add-email" required>
+           id="add-email" pattern="[A-Z_.a-z0-9]*[@][a-z]{2,30}[.][a-z]{2,3}" required>
     <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
       An email is required
     </div>
@@ -83,7 +83,7 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Submit!</button>
+  <button type="submit" class="btn btn-primary" [disabled]="friendForm.invalid">Submit!</button>
 </form>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
