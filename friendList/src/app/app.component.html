@@ -1,38 +1,4 @@
-{{ friendModel | json }}
-
-<style>
-  * {
-    display: block;
-  }
-
-  form {
-    width: 350px;
-    margin: auto;
-  }
-
-  :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 8px 0;
-  }
-
-  p {
-    margin: 0;
-  }
-
-</style>
+<h1>Make a Friend</h1>
 
 <form #friendForm="ngForm" (ngSubmit)="logAFriend()" [noValidate] method="post">
 
@@ -40,35 +6,35 @@
     <label for="add-firstName">First Name</label>
     <input class="form-control" #firstName="ngModel" [(ngModel)]="friendModel.firstName" id="add-firstName"
            name="add-firstName" type="text" pattern="[A-Z][a-z ]*" required>
-    <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
-      A first name is required
+    <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger">
+      A valid first name is required
     </div>
   </div>
 
   <div class="form-group">
     <label for="add-lastName">Last Name</label>
     <input class="form-control" #lastName="ngModel" [(ngModel)]="friendModel.lastName" id="add-lastName"
-           name="add-lastName" type="text" required pattern="[A-Z'][a-z 'A-Z]*">
-    <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
-      A last name is required
+           name="add-lastName" type="text" pattern="[A-Z'][a-z 'A-Z]*" required>
+    <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger">
+      A valid last name is required
     </div>
   </div>
 
   <div class="form-group">
     <label for="add-phone">Phone</label>
-    <input class="form-control" #phone="ngModel" [(ngModel)]="friendModel.phone" type="tel" name="add-phone"
+    <input  class="form-control"  #phone="ngModel" [(ngModel)]="friendModel.phone" type="tel" name="add-phone"
            id="add-phone" pattern="[0-9]{9,10}" required>
-    <div [hidden]="phone.valid || phone.pristine" class="alert alert-danger">
-      A phone number is required
+    <div [hidden]="phone.valid || phone.untouched" class="alert alert-danger">
+      A valid phone number is required
     </div>
   </div>
 
   <div class="form-group">
     <label for="add-email">Email</label>
     <input class="form-control" #email="ngModel" [(ngModel)]="friendModel.email" type="email" name="add-email"
-           id="add-email" pattern="[A-Z_.a-z0-9]*[@][a-z]{2,30}[.][a-z]{2,3}" required>
-    <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-      An email is required
+           id="add-email" pattern="[A-Z_.a-z0-9]*[@][a-z]{2,30}[.][a-z]{2,3}$" required>
+    <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+      A valid email is required
     </div>
   </div>
 
@@ -78,13 +44,38 @@
             id="add-favLang" required>
       <option *ngFor="let language of languages" [value]=language>{{language}}</option>
     </select>
-    <div [hidden]="favLang.valid || favLang.pristine" class="alert alert-danger">
+    <div [hidden]="favLang.valid || favLang.untouched" class="alert alert-danger">
       A favourite coding language is required
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary" [disabled]="friendForm.invalid">Submit!</button>
+  <button type="submit" class="btn btn-primary" [disabled]="friendForm.form.invalid">Submit!</button>
+
 </form>
+
+<table class="table table-dark mt-5 m-auto col-sm">
+  <thead>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Favorite Language</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let friend of allFriends">
+    <td>{{friend.firstName}}</td>
+    <td>{{friend.lastName}}</td>
+    <td>{{friend.phone}}</td>
+    <td>{{friend.email}}</td>
+    <td>{{friend.favLang}}</td>
+    <td><button class="btn btn-danger" (click)="deleteFriend(friend)">Abandon</button></td>
+  </tr>
+  </tbody>
+</table>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
